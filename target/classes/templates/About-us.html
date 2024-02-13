@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - PNS Cinema</title>
+    <link rel="stylesheet" href="#" th:href="@{/style/bootstrap.css}"/>
+<link rel="stylesheet" href="#" th:href="@{/style/indexpage.css}"/>
+<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css}">
+
+    <style>
+		
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+section {
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+}
+
+.team-member {
+    text-align: center;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 10px;
+    }
+}
+#team{
+	display:flex;
+	justify-content: space-evenly;
+}
+h2{
+	color: rgb(128, 64, 0);
+}
+
+	</style>
+</head>
+<body>
+    
+        
+       		 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand" href="#" style="color: #ffcc00;">PNS Gold Theatre</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${menu == 'home'} ? 'text-dark' : ' '" th:href="@{/}"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/loginForm}"><i class="fas fa-users"></i>&nbsp;&nbsp;Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/abt}"><i class="fas fa-address-card"></i>&nbsp;&nbsp;About us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contactUs}"><i class="fas fa-phone-square-alt"></i>&nbsp;&nbsp;Contact us</a>
+                </li>
+                
+                    
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="nav-link" href="#">
+                               <i class="fas fa-user-cirle"><img src="/images/icon_11zon.png" alt="" width="30"></i>&nbsp;
+                                        
+                               </a>
+                                <div class="dropdown-content">
+                                <span class="name-user" th:if="${session.user.name}">Welcome back! <span class="" th:text="${session.user.name}"></span></span>								
+                                    <a th:href="@{/setting}">Settings</a>
+                                    <a th:href="@{/order-history}">Orders</a>
+                                    <a th:href="@{/logout}">Logout</a>
+                                </div>
+                        </div>
+                    </li>
+      
+            </ul>
+        </div>
+    </nav>
+    
+    
+    <main>
+        <section id="about">
+            <h2 style="padding-top: 30px;">Our Story</h2>
+            <p>PNS Cinema is your one-stop destination for an incredible cinematic experience. We are dedicated to bringing the latest and greatest films to our audience while providing a comfortable and enjoyable atmosphere.</p>
+        </section>
+        <section id="mission">
+            <h2>Our Mission</h2>
+            <p>Our mission is to create a welcoming and immersive environment for our customers. We strive to offer a diverse selection of films, from blockbusters to independent cinema, to cater to all tastes. We aim to be a place where people can make memories and share the magic of the big screen with their loved ones.</p>
+        </section>
+        
+        <section id="team">
+            
+            <div class="team-member">
+                <img src="/images/packiya nadar.jpg" alt="John Doe">
+                <h3>Packiyam</h3>
+                <p>Founder & CEO</p>
+            </div>
+            <div class="team-member">
+                <img src="/images/I am.jpeg" alt="Jane Smith">
+                <h3>Esakky Raja</h3>
+                <p>Marketing Director</p>
+            </div>
+            
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 PNS Cinema. All rights reserved.</p>
+    </footer>
+</body>
+</html>

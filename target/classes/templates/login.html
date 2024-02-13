@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>PNS Cinema Login</title>
+    
+    <link rel="stylesheet" href="#" th:href="@{/style/bootstrap.css}" />
+	<style>
+		  
+         
+        body {
+            background-image: url('a.png');
+            background-size :  cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        .login-container {
+            margin-top: 100px;
+        }
+        .login-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .login-card-header {
+            background-color: #FFD700; 
+            color: #000;
+            text-align: center;
+            padding: 10px 0;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .login-card-body {
+            padding: 20px;
+           background: rgba(0, 0, 0, 0.7); 
+           border-radius: 0 0 10px 10px;
+        }
+        .login-form-label {
+            color: #FFD700; 
+        }
+        .login-button {
+            background-color: #FFD700;
+            color: #000;
+        }
+        .login-button:hover {
+            background-color: #FFA500; 
+        }
+        .login-card {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.486);
+            border-radius: 10px;
+        }
+        .login-card-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .login-card-links a {
+            color: #FFD700; 
+            text-decoration: none;
+        }
+        .login-card-links a:hover {
+            color: #FFA500; 
+
+        }
+  
+  		.wrong{
+			 color:red		 
+			  }
+	</style>
+</head>
+<body>
+	
+    <div class="container login-container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card login-card">
+                    <div class="card-header login-card-header">
+                        <h5 class="card-title">PNS Cinema Login</h5>
+                        <div>
+								<span class="wrong" th:text="${failed}"></span>
+							</div>
+                    </div>
+                    <div class="card-body login-card-body">
+                        <form action="processing" method="post">
+							
+                            <div class="form-group">
+                                <label for="useremail" class="login-form-label">E-mail</label>
+                                <input type="email" name="email" aria-describedby="emailHelp" class="form-control" id="useremail" placeholder="Enter your E-mail">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="login-form-label">Password</label>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block login-button">Login</button>
+                        </form>
+                        <div class="login-card-links">
+                            <a href="#" class="mr-2">Forgot Password</a>
+                            <a th:href="@{/register}">Create New Account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Booking Process</title>
+<link rel="stylesheet" href="#" th:href="@{/style/bootstrap.css}" />
+<link rel="stylesheet" href="#" th:href="@{/style/indexpage.css}" />
+<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css}">
+<link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <style>
+
+    </style>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand" href="#" style="color: #ffcc00;">PNS Gold Theatre</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${menu == 'home'} ? 'text-dark' : ' '" th:href="@{/}"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/register}"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/loginForm}"><i class="fas fa-users"></i>&nbsp;&nbsp;Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/abt}"><i class="fas fa-address-card"></i>&nbsp;&nbsp;About us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href=""><i class="fas fa-phone-square-alt"></i>&nbsp;&nbsp;Contact us</a>
+            </li>
+           
+           
+                <li class="nav-item">
+    				<div class="dropdown">
+    					<a class="nav-link" href="#">
+     						   <i class="fas fa-user-cirle"><img src="/images/icon_11zon.png" alt="" width="30"></i>&nbsp;
+     							   
+  						 </a>
+   						 <div class="dropdown-content">
+							<span class="name-user" th:if="${session.user.name}">Welcome back! <span class="" th:text="${session.user.name}"></span></span>								
+       						 <a th:href="@{/setting}">Settings</a>
+      						  <a href="#">Orders</a>
+       						 <a th:href="@{/logout}">Logout</a>
+   						 </div>
+					</div>
+				</li>
+
+                
+                
+        </ul>
+    </div>
+</nav>
+ <div class="container mt-5" style="padding-top: 65px;">
+        
+        
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th scope="col" class="text-primary">Movie</th>
+								<th scope="col" class="text-primary">Seat</th>
+								<th scope="col" class="text-primary">Each Price</th>
+								<th scope="col" class="text-primary">Total price</th>
+								<th scope="col" class="text-primary">Booking Date</th>
+								<th scope="col" class="text-primary">Show on Date</th>
+								<th scope="col" class="text-primary">Show on Time</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="history: ${seatRecords}">
+								<th th:text="${history.movieName}"></th>
+								<th th:text="${history.seat}"></th>
+								<th th:text="${history.price}"></th>
+								<th th:text="${history.total}"></th>
+								<th th:text="${#dates.format(history.bookOnDate, 'dd-MM-yyyy')}"></th>
+								<th th:text="${#dates.format(history.showOnDate, 'dd-MM-yyyy')}"
+									th:classappend="${(history.showOnDate eq #dates.createToday()) or (history.showOnDate.after(#dates.createNow())) ? 'active' : 'deactive'}"></th>
+								<th th:text="${history.showTime}"
+									th:classappend="${(history.showOnDate eq #dates.createToday()) or (history.showOnDate.after(#dates.createNow())) ? 'active' : 'deactive'}"></th>
+
+							</tr>
+
+
+						</tbody>
+					</table>
+				
+    </div>
+
+
+</body>
+</html>
