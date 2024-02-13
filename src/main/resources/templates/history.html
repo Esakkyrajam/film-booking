@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Booking Process</title>
+<link rel="stylesheet" href="#" th:href="@{/style/bootstrap.css}" />
+<link rel="stylesheet" href="#" th:href="@{/style/indexpage.css}" />
+<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css}">
+<link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <style>
+
+    </style>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand" href="#" style="color: #ffcc00;">PNS Gold Theatre</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${menu == 'home'} ? 'text-dark' : ' '" th:href="@{/}"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/register}"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/loginForm}"><i class="fas fa-users"></i>&nbsp;&nbsp;Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/abt}"><i class="fas fa-address-card"></i>&nbsp;&nbsp;About us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/contactUs}"><i class="fas fa-phone-square-alt"></i>&nbsp;&nbsp;Contact us</a>
+            </li>
+           
+           
+                <li class="nav-item">
+    				<div class="dropdown">
+    					<a class="nav-link" href="#">
+     						   <i class="fas fa-user-cirle"><img src="/images/icon_11zon.png" alt="" width="30"></i>&nbsp;
+     							   
+  						 </a>
+   						 <div class="dropdown-content">
+							<span class="name-user" th:if="${session.user.name}">Welcome back! <span class="" th:text="${session.user.name}"></span></span>								
+       						 <a th:href="@{/setting}">Settings</a>
+      						  <a href="#">Orders</a>
+       						 <a th:href="@{/logout}">Logout</a>
+   						 </div>
+					</div>
+				</li>
+
+                
+                
+        </ul>
+    </div>
+</nav>
+ <div class="container mt-5" style="padding-top: 45px;">
+        <h2>Booking Information</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Movie</th>
+                    <th>Seat No</th>                    
+                    <th>Total price</th>
+                    <th>Booking Date</th>
+                    <th>Show on Date</th>
+                    <th>Show on Time</th>
+                </tr>
+            </thead>
+            <tbody>
+             <tr th:each="history: ${hList}">
+				<td th:text="${history.movieName}"></td>
+				<td th:text="${history.seat}"></td>
+				<td th:text="${history.total}"></td>
+				<td th:text="${#dates.format(history.bookOnDate, 'dd-MM-yyyy')}"></td>
+				<td class="showondate"	th:text="${#dates.format(history.showOnDate, 'dd-MM-yyyy')}"></td>
+				<td th:text="${history.showTime}"></td>
+			</tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</body>
+</html>

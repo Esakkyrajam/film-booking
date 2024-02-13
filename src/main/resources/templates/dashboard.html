@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Booking Process</title>
+<link rel="stylesheet" href="#" th:href="@{/style/bootstrap.css}"/>
+<link rel="stylesheet" href="#" th:href="@{/style/indexpage.css}"/>
+<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css}">
+    <style>
+.seat-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.theater-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.theater-screen {
+    width: 75%;
+    height: 30px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 30px 30px 2px 2px;
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.checkbox {
+    display: none;
+}
+
+.seat-image {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.cinema-booking-container {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.selected-seats {
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.price-container {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.price-container span {
+    margin: 0 5px;
+}
+
+.btn1 {
+    margin-left: -40px;
+}
+
+#timeselect, #dateselect {
+    width: 150px;
+    height: 40px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    color: #333;
+    cursor: pointer;
+}
+
+#dateselect::after {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+}
+
+#dateselect:focus::after {
+    color: #ff0000;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand" href="#" style="color: #ffcc00;">PNS Gold Theatre</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${menu == 'home'} ? 'text-dark' : ' '" th:href="@{/}"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/loginForm}"><i class="fas fa-users"></i>&nbsp;&nbsp;Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/abt}"><i class="fas fa-address-card"></i>&nbsp;&nbsp;About us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contactUs}"><i class="fas fa-phone-square-alt"></i>&nbsp;&nbsp;Contact us</a>
+                </li>
+               
+                    
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="nav-link" href="#">
+                                    <i class="fas fa-user-cirle"><img src="/images/icon_11zon.png" alt="" width="30"></i>&nbsp;
+                                        
+                               </a>
+                                <div class="dropdown-content">
+                                <span class="name-user" th:if="${session.user.name}">Welcome back! <span class="" th:text="${session.user.name}"></span></span>								
+                                    <a th:href="@{/setting}">Settings</a>
+                                    <a th:href="@{/order-history}">Orders</a>
+                                    <a th:href="@{/logout}">Logout</a>
+                                </div>
+                        </div>
+                    </li>
+    
+                    
+                    
+            </ul>
+        </div>
+    </nav>
+    
+    
+    
+    
+        <div class="container mt-5" style="padding-top: 65px;">
+
+            
+            
+	<h2 style="padding-right: 500px;">SELECT YOUR SEATS</h2>
+            <div class="row">
+				
+                <div class="col-md-8" style="padding-top: 90px;">
+						
+                    <div class="theater-layout-M">
+                        <div class="cinema-seats">
+						
+                      <form action="book-seat" method="get">
+                        <div class="seat-row">
+                          
+                            
+<label  for="seat1" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat1" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat1')}" th:disabled="${#lists.contains(seats, 'seat1')}" value="seat1" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat1') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat2" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat2" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat2')}" th:disabled="${#lists.contains(seats, 'seat2')}" value="seat2" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat2') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat3" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat3" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat3')}" th:disabled="${#lists.contains(seats, 'seat3')}" value="seat3" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat3') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+                        <label  for="seat4" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat4" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat4')}" th:disabled="${#lists.contains(seats, 'seat4')}" value="seat4" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat4') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+                        <label  for="seat5" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat5" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat5')}" th:disabled="${#lists.contains(seats, 'seat5')}" value="seat5" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat5') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat6" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat6" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat6')}" th:disabled="${#lists.contains(seats, 'seat6')}" value="seat6" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat6') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat7" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat7" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat7')}" th:disabled="${#lists.contains(seats, 'seat7')}" value="seat7" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat7') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat8" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat8" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat8')}" th:disabled="${#lists.contains(seats, 'seat8')}" value="seat8" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat8') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+                        <label  for="seat9" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat9" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat9')}" th:disabled="${#lists.contains(seats, 'seat9')}" value="seat9" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat9') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+                        <label  for="seat10" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat10" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat10')}" th:disabled="${#lists.contains(seats, 'seat10')}" value="seat10" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat10') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+                          </div>
+                
+                          <div class="seat-row">
+                      
+                            
+
+    
+    <label  for="seat12" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat12" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat12')}" th:disabled="${#lists.contains(seats, 'seat12')}" value="seat12" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat12') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat13" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat13" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat13')}" th:disabled="${#lists.contains(seats, 'seat13')}" value="seat13" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat13') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+                        <label  for="seat14" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat14" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat14')}" th:disabled="${#lists.contains(seats, 'seat14')}" value="seat14" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat14') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+                        <label  for="seat15" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat15" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat15')}" th:disabled="${#lists.contains(seats, 'seat15')}" value="seat15" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat15') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat16" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat16" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat16')}" th:disabled="${#lists.contains(seats, 'seat16')}" value="seat16" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat16') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat17" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat17" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat17')}" th:disabled="${#lists.contains(seats, 'seat17')}" value="seat17" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat17') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat18" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat18" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat18')}" th:disabled="${#lists.contains(seats, 'seat18')}" value="seat18" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat18') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+                        <label  for="seat19" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat19" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat19')}" th:disabled="${#lists.contains(seats, 'seat19')}" value="seat19" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat19') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+                        <label  for="seat20" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat20" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat20')}" th:disabled="${#lists.contains(seats, 'seat20')}" value="seat20" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat20') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+
+                          </div>
+                       
+                
+                          <div class="seat-row">
+                           
+                                
+                                <label  for="seat23" class="seat-label">
+                                <input type="checkbox"  class="checkbox" id="seat23" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat23')}" th:disabled="${#lists.contains(seats, 'seat23')}" value="seat23" name="seatNo[]">
+                                <img class="seat-image" th:src="${#lists.contains(seats, 'seat23') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+                                </label>&nbsp;&nbsp;&nbsp;
+                                
+                                                    <label  for="seat24" class="seat-label">
+                                <input type="checkbox"  class="checkbox" id="seat24" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat24')}" th:disabled="${#lists.contains(seats, 'seat24')}" value="seat24" name="seatNo[]">
+                                <img class="seat-image" th:src="${#lists.contains(seats, 'seat24') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+                                </label>&nbsp;&nbsp;&nbsp;
+                                                    <label  for="seat25" class="seat-label">
+                                <input type="checkbox"  class="checkbox" id="seat25" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat25')}" th:disabled="${#lists.contains(seats, 'seat25')}" value="seat25" name="seatNo[]">
+                                <img class="seat-image" th:src="${#lists.contains(seats, 'seat25') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+                                </label>&nbsp;&nbsp;&nbsp;
+                                
+                                <label  for="seat26" class="seat-label">
+                                <input type="checkbox"  class="checkbox" id="seat26" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat26')}" th:disabled="${#lists.contains(seats, 'seat26')}" value="seat26" name="seatNo[]">
+                                <img class="seat-image" th:src="${#lists.contains(seats, 'seat26') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+                                </label>&nbsp;&nbsp;&nbsp;
+                                
+                                <label  for="seat27" class="seat-label">
+                                <input type="checkbox"  class="checkbox" id="seat27" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat27')}" th:disabled="${#lists.contains(seats, 'seat27')}" value="seat27" name="seatNo[]">
+                                <img class="seat-image" th:src="${#lists.contains(seats, 'seat27') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+                                </label>&nbsp;&nbsp;&nbsp;
+                                
+                                <label  for="seat28" class="seat-label">
+                                <input type="checkbox"  class="checkbox" id="seat28" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat28')}" th:disabled="${#lists.contains(seats, 'seat28')}" value="seat28" name="seatNo[]">
+                                <img class="seat-image" th:src="${#lists.contains(seats, 'seat28') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+                                </label>&nbsp;&nbsp;&nbsp;
+                                
+                                                    <label  for="seat29" class="seat-label">
+                                <input type="checkbox"  class="checkbox" id="seat29" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat29')}" th:disabled="${#lists.contains(seats, 'seat29')}" value="seat29" name="seatNo[]">
+                                <img class="seat-image" th:src="${#lists.contains(seats, 'seat29') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+                                </label>&nbsp;&nbsp;&nbsp;
+                                                    <label  for="seat30" class="seat-label">
+                                <input type="checkbox"  class="checkbox" id="seat30" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat30')}" th:disabled="${#lists.contains(seats, 'seat30')}" value="seat30" name="seatNo[]">
+                                <img class="seat-image" th:src="${#lists.contains(seats, 'seat30') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+                                </label>&nbsp;&nbsp;&nbsp;
+                                
+                          </div>
+                       
+                
+                          <div class="seat-row">
+
+                        <label  for="seat34" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat34" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat34')}" th:disabled="${#lists.contains(seats, 'seat34')}" value="seat34" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat34') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+                        <label  for="seat35" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat35" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat35')}" th:disabled="${#lists.contains(seats, 'seat35')}" value="seat35" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat35') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat36" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat36" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat36')}" th:disabled="${#lists.contains(seats, 'seat36')}" value="seat36" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat36') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat37" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat37" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat37')}" th:disabled="${#lists.contains(seats, 'seat37')}" value="seat37" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat37') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+    <label  for="seat38" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat38" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat38')}" th:disabled="${#lists.contains(seats, 'seat38')}" value="seat38" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat38') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+                        <label  for="seat39" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat39" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat39')}" th:disabled="${#lists.contains(seats, 'seat39')}" value="seat39" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat39') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+                        <label  for="seat40" class="seat-label">
+    <input type="checkbox"  class="checkbox" id="seat40" autocomplete="off" hidden="hidden"  th:checked="${#lists.contains(seats, 'seat40')}" th:disabled="${#lists.contains(seats, 'seat40')}" value="seat40" name="seatNo[]">
+    <img class="seat-image" th:src="${#lists.contains(seats, 'seat40') ? '/images/checked-chair.png' : '/images/unchecked-chair.png'}" alt="Seat">
+    </label>&nbsp;&nbsp;&nbsp;
+    
+                          </div>
+                          
+                         
+                          <div class="theater-layout" style="padding-left: 60px;">
+                            <div class="theater-screen">Screen</div> <!-- Add a div for the screen -->
+                        </div>
+                          <div>
+                                  	<button type="submit" class="btn btn-primary btn1">Book seat</button>
+							</div> 
+                          
+                         
+                        
+                         </div>   
+  
+                        
+                    </div>
+                 
+                </div>
+                <div class="col-md-4">
+                    <div class="sidebar">
+
+                       
+                           
+                        
+                            <div class="cinema-booking-container text-center">
+                              <h2>Cinema Booking Summary</h2>
+                              <h4>Selected Seats</h4>
+                              <div class="selected-seats" id="seat-dynamic">
+                                  
+                              </div>
+                              <h4>Total Price</h4>
+                              <div class="price-container">
+                                  
+                                  <span id="show-price"></span>
+                                                               
+                              </div>
+                          </div>
+                          <input type="text" name="movieName" class="movie-title-input" th:value="${session.movieName}"/>
+                  
+   </form>
+  					 <div class="cinemabookingdate" style="padding-top: 50px;">
+                            <h2>Book Tickets</h2>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <form th:action="@{/check}" method="get" id="form">
+                                    <label for="bookingDate">Select a Date:</label>
+                                    <div class="date-picker">
+                                        <input type="date" required="required" name="localdate" th:value="${date}" th:min="${min}" th:max="${max}" id="dateselect" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="showtime">Select Showtime</label>
+                                    
+                                    <select  id="timeselect" name="localtime" required>
+                                        <option th:value="${time}" th:text="${'>>'+time}"></option>
+                                        <option value="9:00 AM">9:00 AM</option>
+                                        <option value="12:00 AM">12:00 AM</option>
+                                        <option value="03:00 PM">03:00 PM</option>
+                                        <option value="06:00 PM">06:00 PM</option>
+                                        <option value="09:00 PM">09:00 PM</option>
+                                    </select>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+   
+                     
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+
+   
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>	
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script>
+        
+            document.getElementById("dateselect").onchange = function() {
+                document.getElementById("form").submit();
+            }
+    
+            document.getElementById("timeselect").onchange = function() {
+                document.getElementById("form").submit();
+            }
+            
+            const mySeats = document.getElementById('seat-dynamic');
+            const myPrice = document.getElementById('show-price');
+            var total = 0;
+            var seat = [];
+            const checkBox = document.querySelectorAll('input[type="checkbox"]');
+            for (var i = 0; i < checkBox.length; i++) {
+                checkBox[i].addEventListener('click', displayValue);
+    
+            }
+            function displayValue(e) {
+                var myValue = 525;
+                if (e.target.checked == true) {
+                    seat.push(e.target.id);
+    
+                    total += myValue;
+    
+                } else {
+                    var index = seat.indexOf(e.target.id);
+                    seat.splice(index, 1);
+                    total -= myValue;
+    
+                }
+                // seat.join("");
+                console.log(seat);
+                console.log(total);
+                mySeats.innerHTML = seat;
+                myPrice.innerHTML = total;
+            }
+            
+            
+            
+            
+            const checkboxes = document.querySelectorAll('.checkbox');
+            
+            checkboxes.forEach(function (checkbox) {
+        	checkbox.addEventListener("change", function () {
+            const seatImage = checkbox.nextElementSibling;
+            if (checkbox.checked) {
+               
+                seatImage.src = "/images/checked-chair.png";
+            } else {
+               
+                seatImage.src = "/images/unchecked-chair.png";
+            }
+        });
+    });       
+    </script>
+</body>
+</html>

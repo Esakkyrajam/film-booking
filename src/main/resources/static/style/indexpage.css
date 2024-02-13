@@ -1,0 +1,302 @@
+* {
+    font-family: "Arial", sans-serif;
+}
+
+ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom {
+    margin: 50px 0 18px 0;
+}
+
+.navbar.sticky-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    color: #ffcc00;
+}
+
+.navbar-nav .nav-item .nav-link a:hover {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid seashell;
+    border-radius: 5px;
+    margin: 5px;
+    text-decoration: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    border-radius: 10px;
+    padding: 10px;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+    text-align: center;
+}
+
+.dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.name-user {
+    font-weight: bold;
+}
+
+.name-user span {
+    color: #007BFF;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.totalprice {
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.movie-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin: 10px;
+    padding: 0 0 20px 0;
+    text-align: center;
+    max-width: 250px;
+}
+
+.movie-card img {
+    max-width: 100%;
+}
+
+.movie-title {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.movie-description {
+    font-size: 14px;
+}
+
+.movie-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.movie-list-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.movie-card:active {
+    background-color: lightblue;
+}
+
+.movie-card.selected {
+    border: 2px solid #007bffa2;
+    border-radius: 5px;
+    outline: none;
+}
+
+.movie-card:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+}
+
+.zoom {
+    transition: transform 0.2s;
+}
+
+.zoom:hover {
+    transform: scale(1.05);
+}
+
+img {
+    border-radius: 10px 10px 0 0;
+}
+
+.top-box {
+    margin-top: 20px;
+}
+
+.mybtn:checked+label {
+    background-image: url('/src/main/resources/static/images/checked-chair.png');
+    background-color: white;
+    color: black;
+}
+
+box1:checked+label {
+    background-image: url('/src/main/resources/static/images/checked-chair.png');
+    color: black;
+}
+
+.base {
+    background-image: url("/images/backgroung poster.jpeg");
+}
+
+.checkbox {
+    display: none;
+}
+
+.seat-image {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.one {
+    background-image: url('/src/main/resources/static/images/checked-chair.png');
+    width: 30px;
+    height: 30px;
+}
+
+.two {
+    background-image: url('/src/main/resources/static/images/unchecked-chair.png');
+    width: 30px;
+    height: 30px;
+}
+
+.seat-section .symbol .one {
+    font-size: 25px;
+}
+
+.seat-section .symbol {
+    margin-left: 21px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.seat-section .symbol .two {
+    font-size: 25px;
+    margin-left: 10px;
+}
+
+.theater-layout {
+    margin-left: -100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.theater-screen {
+    width: 80%;
+    height: 30px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 30px 30px 2px 2px;
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.cinema-booking-container {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.selected-seats {
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.price-container {
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.price-container span {
+    margin: 0 5px;
+}
+
+.container {
+    text-align: center;
+}
+
+.cinema-booking-container {
+    display: inline-block;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.seat-main .date-form-style {
+    display: inline-block;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.movie-title-input {
+    margin-top: 5px;
+    border: 1px dashed dimgray;
+    border-radius: 10px;
+    background: #000;
+    font-family: "Arial", sans-serif;
+    font-size: 24px;
+    color: #ffcc00;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    outline: none;
+}
+
+.cinema-booking-div {
+    margin-right: 80px;
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-family: "Arial", sans-serif;
+}
+
+.cinema-booking-div h2 {
+    font-size: 24px;
+}
+
+.cinema-booking-div select, .cinema-booking-div input {
+    background: transparent;
+    color: #ffcc00;
+    font-weight: bold;
+    text-transform: uppercase;
+     border: none; 
+    outline: none; 
+}
